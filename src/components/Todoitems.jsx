@@ -10,17 +10,27 @@ class Todoitems extends Component {
     };
   };
 
-  markComplete = (e) => {};
-
   render() {
+    const { id, title } = this.props.todo;
+
     return (
       <div>
         <h6 style={this.getStyle()}>
-          <label style={{ verticalAlign: "-7px" }} onChange={this.markComplete}>
+          <label
+            style={{ verticalAlign: "-7px" }}
+            onChange={this.props.markComplete.bind(this, id)}
+          >
             <input type="checkbox" />
             <span></span>
           </label>
-          {this.props.todo.title}{" "}
+          {title}{" "}
+          <label
+            style={{ float: "right", cursor: "pointer" }}
+            onClick={this.props.delTodo.bind(this, id)}
+          >
+            <button className="btn red">x</button>
+            <span></span>
+          </label>
         </h6>
       </div>
     );

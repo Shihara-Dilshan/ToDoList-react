@@ -3,6 +3,8 @@ import "materialize-css/dist/css/materialize.min.css";
 //import M from "materialize-css";
 import "./App.css";
 import Todos from "./components/Todos";
+import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
 
 class App extends React.Component {
   state = {
@@ -24,10 +26,43 @@ class App extends React.Component {
       },
     ],
   };
+
+  markComplete = (id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      }),
+    });
+  };
+
+  delTodo = (id) => {
+    this.setState({
+      todos: [...this.state.todos.filter((todo) => todo.id !== id)],
+    });
+  };
+
+  addTodo = (title) => {
+    const newTodo = {
+      id: 4,
+      title,
+      completed: false,
+    };
+    this.setState({ todos: [...this.state.todos, newTodo] });
+  };
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} />
+        <Header />
+        <AddTodo addTodo={this.addTodo} />
+        <Todos
+          todos={this.state.todos}
+          markComplete={this.markComplete}
+          delTodo={this.delTodo}
+        />
       </div>
     );
   }
